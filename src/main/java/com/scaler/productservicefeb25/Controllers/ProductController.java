@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/products")
 public class ProductController {
 
-    ProductService productService;
-    //http://localhost:8080/product/1
+    private ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+    //http://localhost:8080/products/1
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") Long productId) throws ProductNotFoundException {
         return productService.getProductById(productId);

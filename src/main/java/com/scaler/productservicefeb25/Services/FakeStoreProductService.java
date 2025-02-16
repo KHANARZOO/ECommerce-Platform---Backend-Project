@@ -4,10 +4,12 @@ import com.scaler.productservicefeb25.Dtos.FakeStoreProductDto;
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Category;
 import com.scaler.productservicefeb25.Models.Product;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 //Serialization	Converting a Java object → JSON
 //Deserialization	Converting JSON → Java object
+@Service("fakeStoreProductService")//The @Service annotation is a specialized version of @Component used in Spring Boot to indicate that a class contains business logic (service layer).
 public class FakeStoreProductService implements ProductService{
 
     //Key Features of RestTemplate
@@ -17,8 +19,12 @@ public class FakeStoreProductService implements ProductService{
     // Supports Serialization & Deserialization (JSON, XML)
     RestTemplate restTemplate;
 
+    //Dependency Injection (DI) is a design pattern where Spring injects
+    // dependencies (objects) automatically, so we don’t manually create them using new
     public FakeStoreProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+        // Here, RestTemplate is injected into the class through the constructor.
+        // The object is not created manually (new RestTemplate()), but instead provided by Spring.
     }
     public Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto){
         Product product = new Product();
@@ -26,7 +32,7 @@ public class FakeStoreProductService implements ProductService{
         product.setTitle(fakeStoreProductDto.getTitle());
         product.setDescription(fakeStoreProductDto.getDescription());
         product.setPrice(fakeStoreProductDto.getPrice());
-
+        product.setImageUrl(fakeStoreProductDto.getImage());
         Category category = new Category();
         category.setName(fakeStoreProductDto.getCategory());
         product.setCategory(category);
@@ -53,7 +59,7 @@ public class FakeStoreProductService implements ProductService{
         //Supports Path Variables?	✅ Yes, via {} placeholders
         //Supports Query Params?	✅ Yes, via {} placeholders
         if(fakeStoreProductDto==null){
-            throw new ProductNotFoundException("Product with id" + productId + "not found");
+            throw new ProductNotFoundException("Product with id " + productId + " not found");
         }
         return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }

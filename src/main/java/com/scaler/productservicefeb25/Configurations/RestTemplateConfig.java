@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 //This marks the class as a Spring configuration class, meaning it contains bean definitions.
 @Configuration
-public class configurations {
+public class RestTemplateConfig {
 
     //In Spring, a bean is an instance of a class that is managed by the Spring IoC (Inversion of Control) container.
     //It is created, initialized, and managed by Spring.
