@@ -7,6 +7,9 @@ import com.scaler.productservicefeb25.Models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //Serialization	Converting a Java object → JSON
 //Deserialization	Converting JSON → Java object
 @Service("fakeStoreProductService")//The @Service annotation is a specialized version of @Component used in Spring Boot to indicate that a class contains business logic (service layer).
@@ -62,5 +65,21 @@ public class FakeStoreProductService implements ProductService{
             throw new ProductNotFoundException("Product with id " + productId + " not found");
         }
         return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+    }
+
+    @Override
+    public List<Product> getAllProducts() throws ProductNotFoundException {
+        //Jackson (default JSON parser in Spring) needs a concrete type to deserialize JSON properly.
+        //Generics (List<T>) cause type erasure at runtime, meaning Java loses type information.
+        //Using an array (FakeStoreProductDto[]) preserves type information and allows Jackson to correctly map JSON.
+        FakeStoreProductDto[] fakeStoreProductDto = restTemplate.getForObject(
+                "https://fakestoreapi.com/products",
+                FakeStoreProductDto[].class
+        );
+        List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto1 : fakeStoreProductDto){
+            products.add(convertFakeStoreProductDtoToProduct(fakeStoreProductDto1));
+        }
+        return products;
     }
 }

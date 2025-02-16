@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -21,5 +23,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") Long productId) throws ProductNotFoundException {
         return productService.getProductById(productId);
+    }
+
+    // http://localhost:8080/products
+    @GetMapping()
+    public List<Product> getAllProducts() throws ProductNotFoundException {
+        return productService.getAllProducts();
     }
 }
