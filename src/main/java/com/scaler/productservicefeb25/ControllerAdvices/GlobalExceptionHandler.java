@@ -12,6 +12,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException exception){
         //This line is used in Spring Boot to create an HTTP response with a status code and a message when an exception occurs
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_GATEWAY);
     }
 }
