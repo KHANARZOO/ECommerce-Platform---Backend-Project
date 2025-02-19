@@ -51,4 +51,10 @@ public class ProductController {
     public List<Product> getAllProducts() throws ProductNotFoundException {
         return productService.getAllProducts();
     }
+
 }
+//Hibernate(ORM) will write the queries on our behalf based on the function name
+//Declared queries:- No need to write queries by our own.
+//Just give a method name & ORM will create a query based on the method name
+//Ex: countByTitleContains(String title)
+//Select * from products where title like '%iphone%'
