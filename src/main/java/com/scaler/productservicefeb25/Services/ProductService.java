@@ -10,4 +10,17 @@ public interface ProductService {
     Product getProductById(Long productId) throws ProductNotFoundException;
 
     List<Product> getAllProducts() throws ProductNotFoundException;
+
+    Product createProduct(Product product);
+
+    //You provide a Product object as a parameter.
+    //The method processes it (e.g., saves it to the database).
+    //It returns the saved Product object, usually with an auto-generated ID if it's being saved in a database.
+
+    //The method receives newProduct, which does not have an ID yet.
+    //productRepository.save(product) saves the product in the database.
+    //The database generates an ID (e.g., id = 1).
+    //The saved product with the generated ID is returned.
+
+    //If product already has an ID, it updates the existing record and returns the updated product.
 }

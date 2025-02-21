@@ -1,6 +1,5 @@
 package com.scaler.productservicefeb25.Repositories;
 
-import com.scaler.productservicefeb25.Models.Category;
 import com.scaler.productservicefeb25.Models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

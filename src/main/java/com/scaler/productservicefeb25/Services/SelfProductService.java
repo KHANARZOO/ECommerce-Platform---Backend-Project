@@ -1,7 +1,9 @@
 package com.scaler.productservicefeb25.Services;
 
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
+import com.scaler.productservicefeb25.Models.Category;
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Repositories.CategoryRepository;
 import com.scaler.productservicefeb25.Repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class SelfProductService implements ProductService {
 
     private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
 
-    public SelfProductService(ProductRepository productRepository) {
+    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
     @Override
     public Product getProductById(Long productId) throws ProductNotFoundException {
@@ -36,4 +40,32 @@ public class SelfProductService implements ProductService {
         }
         return products;
     }
+
+    @Override
+    public Product createProduct(Product product) {
+        Category category = product.getCategory();
+        Optional<Category> optionalCategory = categoryRepository.findByName(category.getName());
+        //Checks if the product's category already exists in the database.
+        if(optionalCategory.isEmpty()){
+//            It searches the database for a category with the same name using categoryRepository.findByName(category.getName()).
+//            This returns an Optional<Category>, meaning:
+//            If the category exists, it will contain the category.
+//            If the category does not exist, it will be empty.
+
+                    category = categoryRepository.save(category);
+        }else{
+            category = optionalCategory.get();
+        }
+        product.setCategory(category);
+        return productRepository.save(product);
+
+    }
+
+
+    //Step 1: Spring scans for repository interfaces.
+    //ProductRepository and CategoryRepository are interfaces extending JpaRepository, so Spring automatically provides implementations at runtime.
+    //Step 2: Spring registers them as Beans.
+    //These implementations are stored in Spring’s Application Context (a container that manages beans).
+    //Step 3: Spring injects them into SelfProductService using Constructor Injection.
+    //When SelfProductService is created, Spring checks for required dependencies and injects the available beans.
 }

@@ -2,12 +2,10 @@ package com.scaler.productservicefeb25.Controllers;
 
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Repositories.ProductRepository;
 import com.scaler.productservicefeb25.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,11 +13,13 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    private final ProductRepository productRepository;
     private ProductService productService;
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService, ProductRepository productRepository) {
         // Ambiguity Error: Which bean should be injected?
         this.productService = productService;
+        this.productRepository = productRepository;
     }
     //Beans:
     // SelfProductService (SelfProductService. java) and fakeStoreProductService (FakeStoreProductService. java)
@@ -52,6 +52,10 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PostMapping
+    public Product saveProduct(@RequestBody Product product) throws ProductNotFoundException {
+        return productService.createProduct(product);
+    }
 }
 //Hibernate(ORM) will write the queries on our behalf based on the function name
 //Declared queries:- No need to write queries by our own.
