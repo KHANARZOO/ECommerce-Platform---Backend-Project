@@ -23,4 +23,8 @@ public interface ProductService {
     //The saved product with the generated ID is returned.
 
     //If product already has an ID, it updates the existing record and returns the updated product.
+
+    Product replaceProduct(Long productId, Product product) throws ProductNotFoundException;
+
+    void deleteProduct(Long productId) throws ProductNotFoundException;
 }

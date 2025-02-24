@@ -56,6 +56,16 @@ public class ProductController {
     public Product saveProduct(@RequestBody Product product) throws ProductNotFoundException {
         return productService.createProduct(product);
     }
+
+    @PutMapping("/{id}")
+    public Product replaceProduct(@PathVariable("id") Long productId,
+                                  @RequestBody Product product) throws ProductNotFoundException {
+        return productService.replaceProduct(productId, product);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
+        productService.deleteProduct(productId);
+    }
 }
 //Hibernate(ORM) will write the queries on our behalf based on the function name
 //Declared queries:- No need to write queries by our own.

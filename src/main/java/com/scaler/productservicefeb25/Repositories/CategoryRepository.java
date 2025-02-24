@@ -15,7 +15,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Override
     Category save(Category category);
 
-//JpaRepository is a Spring Data JPA interface that provides built-in methods like save(), findById(), etc
+    @Override
+    void deleteById(Long categoryId);
+
+    //JpaRepository is a Spring Data JPA interface that provides built-in methods like save(), findById(), etc
 //Spring Boot Automatically Creates an Implementation
 //Spring scans for interfaces that extend JpaRepository.
 //At runtime, it creates a proxy class that implements ProductRepository.

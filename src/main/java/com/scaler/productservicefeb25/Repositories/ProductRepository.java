@@ -41,6 +41,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByCategory_Id(Long categoryId);
     //kind of join query
 
+
+    @Override
+    void deleteById(Long productId);
 }
 //JpaRepository<T, ID> is an interface in Spring Data JPA that provides built-in methods for database
 // operations like CRUD (Create, Read, Update, Delete) without writing boilerplate code.
