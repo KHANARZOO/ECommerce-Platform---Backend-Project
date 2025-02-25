@@ -2,6 +2,7 @@ package com.scaler.productservicefeb25.Controllers;
 
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 import com.scaler.productservicefeb25.Repositories.ProductRepository;
 import com.scaler.productservicefeb25.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,6 +66,11 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
         productService.deleteProduct(productId);
+    }
+
+    @GetMapping("/title/{title}/price/{price}")
+    public List<ProductWithTitleAndPrice> getProductWithTitleAndPrice(@PathVariable("title") String title, @PathVariable("price") String price) throws ProductNotFoundException {
+        return productService.getProductWithTitleAndPrice(title, price);
     }
 }
 //Hibernate(ORM) will write the queries on our behalf based on the function name

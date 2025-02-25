@@ -4,6 +4,7 @@ import com.scaler.productservicefeb25.Dtos.FakeStoreProductDto;
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Category;
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -95,5 +96,10 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public void deleteProduct(Long productId) throws ProductNotFoundException {
+    }
+
+    @Override
+    public List<ProductWithTitleAndPrice> getProductWithTitleAndPrice(String title, String price) throws ProductNotFoundException {
+        return List.of();
     }
 }

@@ -2,6 +2,7 @@ package com.scaler.productservicefeb25.Services;
 
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface ProductService {
     Product replaceProduct(Long productId, Product product) throws ProductNotFoundException;
 
     void deleteProduct(Long productId) throws ProductNotFoundException;
+
+    List<ProductWithTitleAndPrice> getProductWithTitleAndPrice(String title, String price) throws ProductNotFoundException;
 }

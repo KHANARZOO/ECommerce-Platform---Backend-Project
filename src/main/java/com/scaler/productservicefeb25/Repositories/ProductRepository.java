@@ -1,7 +1,9 @@
 package com.scaler.productservicefeb25.Repositories;
 
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -44,6 +46,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Override
     void deleteById(Long productId);
+
+    //Native Query = SQL Query
+    @Query(value = "select p.title, p.price from products p where p.title = :title and p.price = :price", nativeQuery = true)
+    List<ProductWithTitleAndPrice> getProductTitleAndPrice(String title, String price);
 }
 //JpaRepository<T, ID> is an interface in Spring Data JPA that provides built-in methods for database
 // operations like CRUD (Create, Read, Update, Delete) without writing boilerplate code.

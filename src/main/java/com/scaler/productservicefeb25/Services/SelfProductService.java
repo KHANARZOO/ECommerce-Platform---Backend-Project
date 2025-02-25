@@ -3,6 +3,7 @@ package com.scaler.productservicefeb25.Services;
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Category;
 import com.scaler.productservicefeb25.Models.Product;
+import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 import com.scaler.productservicefeb25.Repositories.CategoryRepository;
 import com.scaler.productservicefeb25.Repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
@@ -94,6 +95,11 @@ public class SelfProductService implements ProductService {
             throw new ProductNotFoundException("Product with ID "+productId+" not found");
         }
         productRepository.deleteById(productId);
+    }
+
+    @Override
+    public List<ProductWithTitleAndPrice> getProductWithTitleAndPrice(String title, String price) throws ProductNotFoundException {
+        return productRepository.getProductTitleAndPrice(title, price);
     }
 
 

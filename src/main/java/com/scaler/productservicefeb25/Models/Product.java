@@ -1,6 +1,7 @@
 package com.scaler.productservicefeb25.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +22,8 @@ public class Product extends BaseModel{
     // 1 Product --> 1 Category
     // M Product <--  1 Category
     // ManyToOne
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+//    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Category category;
 }

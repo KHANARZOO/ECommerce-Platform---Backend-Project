@@ -15,6 +15,6 @@ import java.util.List;
 public class Category extends BaseModel {
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<Product> products;
 }
