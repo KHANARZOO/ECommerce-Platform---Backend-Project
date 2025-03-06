@@ -6,7 +6,9 @@ import com.scaler.productservicefeb25.Models.Product;
 import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 import com.scaler.productservicefeb25.Repositories.CategoryRepository;
 import com.scaler.productservicefeb25.Repositories.ProductRepository;
-import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,15 +35,24 @@ public class SelfProductService implements ProductService {
         return optionalProduct.get();
     }
 
-    @Override
-    public List<Product> getAllProducts() throws ProductNotFoundException {
-        List<Product> products = productRepository.findAll();
-        if(products.isEmpty()){
-            throw new ProductNotFoundException("Product list is empty");
-        }
-        return products;
-    }
 
+//Without pageable
+//    @Override
+//    public List<Product> getAllProducts() throws ProductNotFoundException {
+//        List<Product> products = productRepository.findAll();
+//        if(products.isEmpty()){
+//            throw new ProductNotFoundException("Product list is empty");
+//        }
+//        return products;
+//    }
+
+//With pageable
+    @Override
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) throws ProductNotFoundException {
+        return productRepository.findAll(
+            PageRequest.of(pageNumber, pageSize, Sort.by("title").descending())
+        );
+    }
     @Override
     public Product createProduct(Product product) {
         Category category = product.getCategory();

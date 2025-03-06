@@ -5,6 +5,8 @@ import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Category;
 import com.scaler.productservicefeb25.Models.Product;
 import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -67,9 +69,24 @@ public class FakeStoreProductService implements ProductService{
         }
         return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }
-
-    @Override
-    public List<Product> getAllProducts() throws ProductNotFoundException {
+//without pagination
+//    @Override
+//    public List<Product> getAllProducts() throws ProductNotFoundException {
+//        //Jackson (default JSON parser in Spring) needs a concrete type to deserialize JSON properly.
+//        //Generics (List<T>) cause type erasure at runtime, meaning Java loses type information.
+//        //Using an array (FakeStoreProductDto[]) preserves type information and allows Jackson to correctly map JSON.
+//        FakeStoreProductDto[] fakeStoreProductDto = restTemplate.getForObject(
+//                "https://fakestoreapi.com/products",
+//                FakeStoreProductDto[].class
+//        );
+//        List<Product> products = new ArrayList<>();
+//        for(FakeStoreProductDto fakeStoreProductDto1 : fakeStoreProductDto){
+//            products.add(convertFakeStoreProductDtoToProduct(fakeStoreProductDto1));
+//        }
+//        return products;
+//    }
+@Override
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) throws ProductNotFoundException {
         //Jackson (default JSON parser in Spring) needs a concrete type to deserialize JSON properly.
         //Generics (List<T>) cause type erasure at runtime, meaning Java loses type information.
         //Using an array (FakeStoreProductDto[]) preserves type information and allows Jackson to correctly map JSON.
@@ -81,7 +98,7 @@ public class FakeStoreProductService implements ProductService{
         for(FakeStoreProductDto fakeStoreProductDto1 : fakeStoreProductDto){
             products.add(convertFakeStoreProductDtoToProduct(fakeStoreProductDto1));
         }
-        return products;
+        return new PageImpl<>(products);
     }
 
     @Override

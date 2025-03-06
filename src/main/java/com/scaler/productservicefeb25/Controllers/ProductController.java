@@ -6,6 +6,7 @@ import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
 import com.scaler.productservicefeb25.Repositories.ProductRepository;
 import com.scaler.productservicefeb25.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,10 +49,17 @@ public class ProductController {
     }
 
     // http://localhost:8080/products
-    @GetMapping()
-    public List<Product> getAllProducts() throws ProductNotFoundException {
-        return productService.getAllProducts();
+    //without pagination
+//    @GetMapping()
+//    public List<Product> getAllProducts() throws ProductNotFoundException {
+//        return productService.getAllProducts();
+//    }
+    //with Pagination
+    @GetMapping
+    public Page<Product> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) throws ProductNotFoundException {
+        return productService.getAllProducts(pageNumber, pageSize);
     }
+
 
     @PostMapping
     public Product saveProduct(@RequestBody Product product) throws ProductNotFoundException {

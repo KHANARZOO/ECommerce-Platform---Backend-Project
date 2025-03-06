@@ -3,6 +3,7 @@ package com.scaler.productservicefeb25.Services;
 import com.scaler.productservicefeb25.Exceptions.ProductNotFoundException;
 import com.scaler.productservicefeb25.Models.Product;
 import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -10,7 +11,9 @@ public interface ProductService {
 
     Product getProductById(Long productId) throws ProductNotFoundException;
 
-    List<Product> getAllProducts() throws ProductNotFoundException;
+//    List<Product> getAllProducts() throws ProductNotFoundException;
+
+    Page<Product> getAllProducts(int pageNumber, int pageSize) throws ProductNotFoundException;
 
     Product createProduct(Product product);
 

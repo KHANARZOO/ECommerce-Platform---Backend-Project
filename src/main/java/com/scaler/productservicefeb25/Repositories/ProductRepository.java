@@ -2,6 +2,8 @@ package com.scaler.productservicefeb25.Repositories;
 
 import com.scaler.productservicefeb25.Models.Product;
 import com.scaler.productservicefeb25.Projections.ProductWithTitleAndPrice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,8 +30,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // It will NOT return null, but an Optional wrapper with no value inside.
 
 
-    @Override
-    List<Product> findAll();
+//    @Override
+//    List<Product> findAll(Pageable pageable);
+
+    Page<Product> findAll(Pageable pageable);
     //Why no optional here?
     //Optional is for Single Objects, Not Collections
     //Optional<T> is designed to handle a single value that may or may not be present.

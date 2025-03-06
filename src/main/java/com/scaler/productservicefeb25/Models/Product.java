@@ -22,8 +22,6 @@ public class Product extends BaseModel{
     // 1 Product --> 1 Category
     // M Product <--  1 Category
     // ManyToOne
-//    @ManyToOne
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JsonIgnore
     private Category category;
 }
